@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+    {{post.title}}
+{% endblock title %}
+
+
+{% block content %}
+<div class="container w-96 mx-auto">
+    <p class="text-gray-500">Created by {{post.author}}</p>
+    <h2 class="text-center">{{post.title}}</h2>
+    <img class="mx-auto" src="{{post.image.url}}"/>
+    <p>{{post.body}}</p>
+</div>
+{% endblock content %}
