@@ -5,10 +5,26 @@
 
 
 {% block content %}
+<section class="h-screen w-screen bg-gradient-to-br from-pink-50 to-indigo-100 p-8">
 <div class="container w-96 mx-auto">
     <p class="text-gray-500">Created by {{post.author}}</p>
     <h2 class="text-center">{{post.title}}</h2>
     <img class="mx-auto" src="{{post.image.url}}"/>
     <p>{{post.body}}</p>
 </div>
+{% with comments.count as total_comments %}
+<h2>
+    {{ total_comments }} comment{{ total_comments|pluralize }}
+    {% for comment in comments %}
+        <p>{{comment.body}} by {{comment.name}}</p>
+    {% endfor %}
+    <h4>Add comment</h4>
+    <form method="post" class="mt-5">
+        {% csrf_token %}
+        {{comment_form.as_p}}
+        <input type="submit" value="Send"/>
+    </form>
+</h2>
+{% endwith %}
+</section>
 {% endblock content %}
