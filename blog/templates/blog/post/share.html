@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Share post {{post.title}}
+{% endblock title %}
+
+{% block content %}
+
+
+<section class="h-screen w-screen bg-gradient-to-br from-pink-50 to-indigo-100 p-8">
+    <h1 class="text-center font-bold text-2xl text-indigo-500">Share post</h1>
+    {% if sent %}
+    <h3>Message was sent to {{form.cleaned_data.to}}</h3>
+    {% else %}
+    <form method="post">
+        {{form.as_p}}
+        {% csrf_token %}
+        <button type="submit">Share</button>
+    </form>
+    {% endif %}
+</section>
+{% endblock content %}

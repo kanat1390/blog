@@ -126,3 +126,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = 'files/'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'atygayev.kanat@gmail.com'
+EMAIL_HOST_PASSWORD = 'Huawei1234567890)(*&^%$#@!'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

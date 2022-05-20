@@ -1,6 +1,9 @@
+from multiprocessing import context
 from django.shortcuts import render, get_object_or_404
 from .models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .forms import EmailPostForm
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -27,3 +30,27 @@ def post_detail(request, slug, year, month, day):
         'post': post,
     }
     return render(request, 'blog/post/detail.html', context)
+
+
+def post_share(request, post_id):
+    post = get_object_or_404(Post, id=post_id, status='published')
+    sent = False
+    if request.method == 'POST':
+        form = EmailPostForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            post_url = request.build_absolute_uri(post.get_absolute_url())
+            subject = f"{data['name']} recomends you read {post.title}"
+            receiver = data['to']
+            sender = data['email']
+            message = f"Read {post.title} at {post_url}\n\n"
+            send_mail(subject, message, sender, [receiver])
+            sent = True
+    else:
+        form = EmailPostForm()
+    context = {
+        'post': post,
+        'form': form,
+        'sent': sent
+    }
+    return render(request, 'blog/post/share.html', context)
